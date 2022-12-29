@@ -1,3 +1,4 @@
+;;;; Algol
 (defvar algol-mode-hook nil)
 (defvar algol-mode-map (make-keymap) "Keymap for algol-mode")
 
@@ -7,11 +8,12 @@
 (defconst *ident* "\\([a-z][a-z0-9 ]*\\)")
 (defvar algol-mode-font-lock-keywords
   `((
-	 ;; Line comment (sorta; algol doesn't have line comments afaik)
+	 ;; Comment
+	 ("COMMENT .*? COMMENT" . font-lock-comment-face)
 	 ("CO .*? CO" . font-lock-comment-face)
 
 	 ;; Strings
-	 ("[\"'].*?[\"']" 0 font-lock-string-face t)
+	 ("[\"'$].*?[\"'$]" 0 font-lock-string-face t)
 
 	 ;; GO TO label
 	 (,(concat "\\<\\(GO TO\\|GOTO\\)\\>[[:space:]]+" *ident*) (1 font-lock-keyword-face) (2 font-lock-string-face))
@@ -29,7 +31,7 @@
  	 ("\\<\\(INT\\|REAL\\|COMPL\\|BOOL\\|CHAR\\|BITS\\|BYTES\\|STRING\\|FORMAT\\|FILE\\|CHANNEL\\|SEMA\\|VOID\\)" . font-lock-type-face)
 
  	 ;; Operators
-	 ("\\<\\(MOD\\|EQ\\|NE\\|LT\\|GT\\|LE\\|GE\\|AND\\|OR\\|NOT\\|IS\\|ISNT\\|LWB\\|UPB\\|ABS\\|REPR\\|SORT\\)" . font-lock-keyword-face)
+	 ("\\<\\(MOD\\|EQ\\|NE\\|LT\\|GT\\|LE\\|GE\\|AND\\|OR\\|NOT\\|IS\\|ISNT\\|LWB\\|UPB\\|ABS\\|REPR\\|SORT\\|BIN\\|SHL\\|SHR\\)" . font-lock-keyword-face)
 
 	 ;; Builtin functions
  	 ("\\(new line\\|die\\)" . font-lock-function-name-face)
@@ -53,7 +55,7 @@
 	 ("\\_<[0-9][0-9a-fA-F]*\\_>" . font-lock-constant-face)
 
 	 ;; Operators
-	 ("\\[\\|\\]\\|\\*\\|[+-;=≠():]" . font-lock-keyword-face)
+	 ("\\[\\|\\]\\|\\*\\|[+-;=≠():<>|%÷]" . font-lock-keyword-face)
 	 )))
 
 (defvar algol-mode-syntax-table
@@ -72,6 +74,7 @@
 	(setq font-lock-defaults algol-mode-font-lock-keywords)
 	(setq comment-start "CO")
 	(setq comment-end "CO")
+	(electric-indent-mode 0)
 	(set (make-local-variable 'indent-line-function) 'algol-indent-line))
 
 (provide 'algol-mode)
