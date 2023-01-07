@@ -9,8 +9,8 @@
 (defvar algol-mode-font-lock-keywords
   `((
 	 ;; Comment
-	 ("COMMENT .*? COMMENT" . font-lock-comment-face)
-	 ("CO .*? CO" . font-lock-comment-face)
+	 ("COMMENT \\(\\|.\\)*? COMMENT" . font-lock-comment-face)
+	 ("CO \\(\\|.\\)*? CO" . font-lock-comment-face)
 
 	 ;; Strings
 	 ("[\"'$].*?[\"'$]" 0 font-lock-string-face t)
